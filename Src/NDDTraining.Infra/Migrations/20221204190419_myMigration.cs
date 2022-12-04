@@ -5,14 +5,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace NDDTraining.Infra.Data.Migrations
+namespace NDDTraining.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSeed : Migration
+    public partial class myMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ACTIVITY",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TITLE = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: false),
+                    DESCRIPTION = table.Column<string>(type: "VARCHAR(200)", maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ACTIVITY", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "TRAININGS",
                 columns: table => new
@@ -25,7 +39,8 @@ namespace NDDTraining.Infra.Data.Migrations
                     TEACHER = table.Column<string>(type: "VARCHAR(150)", maxLength: 150, nullable: false),
                     DURATION = table.Column<TimeSpan>(type: "TIME", nullable: false),
                     ACTIVE = table.Column<bool>(type: "bit", nullable: false),
-                    CATEGORY = table.Column<string>(type: "VARCHAR(50)", maxLength: 50, nullable: false)
+                    CATEGORY = table.Column<string>(type: "VARCHAR(50)", maxLength: 50, nullable: false),
+                    DATE = table.Column<DateTime>(type: "DATE", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,7 +72,7 @@ namespace NDDTraining.Infra.Data.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainingId = table.Column<int>(type: "int", nullable: false),
+                    TrainingId = table.Column<int>(type: "int", nullable: true),
                     TITLEMODULE = table.Column<string>(name: "TITLE_MODULE", type: "VARCHAR(100)", maxLength: 100, nullable: false),
                     LINK = table.Column<string>(type: "VARCHAR(200)", maxLength: 200, nullable: false),
                     IMAGE = table.Column<string>(type: "VARCHAR(200)", maxLength: 200, nullable: false),
@@ -71,8 +86,7 @@ namespace NDDTraining.Infra.Data.Migrations
                         name: "FK_MODULES_TRAININGS_TrainingId",
                         column: x => x.TrainingId,
                         principalTable: "TRAININGS",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -129,12 +143,12 @@ namespace NDDTraining.Infra.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "TRAININGS",
-                columns: new[] { "ID", "ACTIVE", "CATEGORY", "DESCRIPTION", "DURATION", "TEACHER", "TITLE", "URL" },
+                columns: new[] { "ID", "ACTIVE", "CATEGORY", "DESCRIPTION", "DURATION", "DATE", "TEACHER", "TITLE", "URL" },
                 values: new object[,]
                 {
-                    { 1, true, "tecnologia", "Architecto eaque consectetur nostrum impedit earum at harum. Reiciendis suscipit soluta, ab, repellat ad, Architecto eaque consectetur nostrum impedit earum at harum. Architecto eaque consectetur nostrum impedit earum at harum., Architecto eaque consectetur nostrum impedit earum at harum.", new TimeSpan(0, 20, 0, 0, 0), "Carlos Silva", "Manutenção de Computadores", "https://certificadocursosonline.com/wp-content/uploads/2018/07/Curso-de-Manutenc%CC%A7a%CC%83o-de-Computadores.jpg" },
-                    { 2, true, "idioma", "Neste curso, os alunos irão obter um conhecimento aprofundado sobre os recursos disponíveis sobre Inlges o basico.", new TimeSpan(2, 22, 0, 0, 0), "Rodrigo Rosa", "Ingles Basico", "https://setcesp.org.br/wp-content/uploads/2019/08/treinamento.jpg" },
-                    { 3, true, "educacao", "Neste curso, os alunos irão obter um conhecimento aprofundado sobre os recursos disponíveis.", new TimeSpan(0, 18, 0, 0, 0), "Maria Eduarda", "Redacao", "https://setcesp.org.br/wp-content/uploads/2019/08/treinamento.jpg" }
+                    { 1, true, "tecnologia", "Architecto eaque consectetur nostrum impedit earum at harum. Reiciendis suscipit soluta, ab, repellat ad, Architecto eaque consectetur nostrum impedit earum at harum. Architecto eaque consectetur nostrum impedit earum at harum., Architecto eaque consectetur nostrum impedit earum at harum.", new TimeSpan(0, 20, 0, 0, 0), new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Carlos Silva", "Manutenção de Computadores", "https://certificadocursosonline.com/wp-content/uploads/2018/07/Curso-de-Manutenc%CC%A7a%CC%83o-de-Computadores.jpg" },
+                    { 2, true, "idioma", "Neste curso, os alunos irão obter um conhecimento aprofundado sobre os recursos disponíveis sobre Inlges o basico.", new TimeSpan(2, 22, 0, 0, 0), new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rodrigo Rosa", "Ingles Basico", "https://setcesp.org.br/wp-content/uploads/2019/08/treinamento.jpg" },
+                    { 3, true, "educacao", "Neste curso, os alunos irão obter um conhecimento aprofundado sobre os recursos disponíveis.", new TimeSpan(0, 18, 0, 0, 0), new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Maria Eduarda", "Redacao", "https://setcesp.org.br/wp-content/uploads/2019/08/treinamento.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -187,6 +201,9 @@ namespace NDDTraining.Infra.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ACTIVITY");
+
             migrationBuilder.DropTable(
                 name: "COMPLETED_MODULE");
 

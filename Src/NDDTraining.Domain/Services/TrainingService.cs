@@ -124,8 +124,7 @@ namespace NDDTraining.Domain.Services
             {
 
                 // Tenta converter a variavel que contia o nome para um inteiro
-                int id;
-                if (Int32.TryParse(nameOrId, out id))
+                if (Int32.TryParse(nameOrId, out int id))
                 {
 
                     // Se a conversão for possivel, obtem o primeiro treinamento com o id inserido na rota
@@ -173,7 +172,7 @@ namespace NDDTraining.Domain.Services
             {
 
                 // Adiciona o id do aluno em questão na lista de matriculados e na contagem do mesmo
-                nRegistred = nRegistred + 1;
+                nRegistred = nRegistred ++;
                 registred.Add(item.UserId);
 
                 // Verifica se o status do treinamento para o aluno é 'em andamento'(Progress)
@@ -181,7 +180,7 @@ namespace NDDTraining.Domain.Services
                 {
 
                     // Adiciona o id do aluno em questão na lista dos que estão em andamento do treinamento e na contagem do mesmo
-                    nProgress = nProgress + 1;
+                    nProgress = nProgress ++;
                     progress.Add(item.UserId);
                 }
 
@@ -190,7 +189,7 @@ namespace NDDTraining.Domain.Services
                 {
 
                     // Adiciona o id do aluno em questão na lista de concluidos e na contagem do mesmo
-                    nFinished = nFinished + 1;
+                    nFinished = nFinished ++;
                     finished.Add(item.UserId);
                 }
             }

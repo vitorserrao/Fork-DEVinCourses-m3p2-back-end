@@ -14,13 +14,16 @@ namespace NDDTraining.Domain.Models
         public TimeSpan Duration { get; set; }
         public bool Active { get; set; }
         public string Category { get; set; }
+        public DateTime ReleaseDate { get; set; }
         public virtual List<Module> Modules { get; set; }
+        
         public Training()
 		{
 
 		}
 
-        public Training(int id, string url, string title, string description, string teacher, TimeSpan duration, bool active, string category)
+        public Training(int id, string url, string title, string description, string teacher, 
+                        TimeSpan duration, bool active, string category, DateTime releaseDate)
         {
             Id = id;
             Url = url;
@@ -30,7 +33,8 @@ namespace NDDTraining.Domain.Models
             Duration = duration;
             Active = active;
             Category = category;
-        }
+            ReleaseDate = releaseDate;
+    }
 
         public Training(TrainingDTO training)
         {
@@ -41,6 +45,7 @@ namespace NDDTraining.Domain.Models
             Duration =  training.Duration;
             Active = training.Active;
             Category = training.Category;
+            ReleaseDate = training.ReleaseDate;
         }
     }
 }
