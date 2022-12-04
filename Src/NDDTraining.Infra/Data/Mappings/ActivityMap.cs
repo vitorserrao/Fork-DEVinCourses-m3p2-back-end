@@ -33,6 +33,8 @@ namespace NDDTraining.Infra.Data.Mappings
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(200)
                 .IsRequired();
+
+
         }
     }
 
