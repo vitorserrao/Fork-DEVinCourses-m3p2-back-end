@@ -7,7 +7,7 @@ namespace NDDTraining.Domain.Interfaces.Services
     {
 
 
-        public bool validSize(string b64);
+        public bool ValidSize(string b64);
         User GetUser(string email);
         void InsertUser(UserDTO newUser);
         void Update(UserDTO changedUser, int id);
