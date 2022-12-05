@@ -90,11 +90,6 @@ namespace NDDTraining.Domain.Services
            
             var user = _userRepository.CheckResetEmail(emailReset);
 
-            // if (user == null || user.Email != emailReset)
-            // {
-            //     throw new EmailErrorException("Email não Encontrado!");
-            // }
-
            
             var resetToken = GeneratedToken(user.Id);
 
@@ -154,19 +149,26 @@ namespace NDDTraining.Domain.Services
         }
 
 
-        public bool validSize(string b64)
+        public bool ValidSize(string b64)
         {
             throw new NotImplementedException();
         }
 
         public bool InvalidSize(string b64)
         {
-            var tamanho = b64.Length;
-            var sizeInBytes = 10000000;
-            if (tamanho > sizeInBytes)
-                return true;
+            if (b64 != null)
+            {
+                var tamanho = b64.Length;
+                var sizeInBytes = 10000000;
+                if (tamanho > sizeInBytes)
+                    return true;
+                else
+                    return false;
+            }
+
             else
                 return false;
+            
         }
 
     }
